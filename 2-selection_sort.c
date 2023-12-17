@@ -20,7 +20,7 @@ void selection_sort(int *array, size_t size)
 			if (array[j] < array[smallest_value])
 				smallest_value = j;
 		}
-		if (min_idx != i)
+		if (smallest_value != i)
 		{
 			swap(&array[i], &array[smallest_value]);
 			print_array(array, size);
