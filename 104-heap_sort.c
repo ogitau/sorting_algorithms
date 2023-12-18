@@ -4,7 +4,7 @@
  * swap_root - A function that swap the root nodes.
  * @array: The heap to sort.
  * @root: The root of the heap.
- * @hi: The higher index.
+ * @high: The higher index.
  * @size: The size of the array.
  * Return: Nothing
  */

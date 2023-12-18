@@ -19,7 +19,7 @@ void merge_sort(int *array, size_t size)
 	base = malloc(sizeof(int) * size);
 	if (base == NULL)
 		return;
-	for(; idx < size; idx++)
+	for (; idx < size; idx++)
 		base[idx] = array[idx];
 	merge_partition(0, size, array, base);
 	free(base);
@@ -47,7 +47,7 @@ void merge(size_t low, size_t midd, size_t high, int *dest, int *src)
 	b = midd;
 	c = low;
 
-	for(; c < high; c++)
+	for (; c < high; c++)
 	{
 		if (a < midd && (b >= high || src[a] <= src[b]))
 		{
