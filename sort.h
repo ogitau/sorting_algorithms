@@ -33,4 +33,5 @@ void merge_partition(size_t low, size_t high, int *array, int *base);
 void merge(size_t lo, size_t mi, size_t hi, int *dest, int *src);
 void merge_sort(int *array, size_t size);
 void heap_sort(int *array, size_t size);
+void swap_root(int *array, size_t root, size_t high, size_t size);
 #endif

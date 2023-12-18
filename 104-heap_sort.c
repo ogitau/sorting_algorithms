@@ -1,65 +1,63 @@
 #include "sort.h"
-
 /**
- * swap_root - A function that swap the root nodes.
- * @array: The heap to sort.
- * @root: The root of the heap.
- * @high: The higher index.
- * @size: The size of the array.
- * Return: Nothing
+ * swap - function that swap two element
+ * @x: first element
+ * @y: second element
  */
-void swap_root(int *array, size_t root, size_t high, size_t size)
+void swap(int *x, int *y)
 {
-	size_t low = 0, midd = 0, tmp = 0;
-	int ax = 0;
-
-	while ((low = (2 * root + 1)) <= high)
-	{
-		tmp = root;
-		midd = low + 1;
-		if (array[tmp] < array[low])
-			tmp = low;
-		if (midd <= high && array[tmp] < array[midd])
-			tmp = midd;
-		if (tmp == root)
-			return;
-		ax = array[root];
-		array[root] = array[tmp];
-		array[tmp] = ax;
-		print_array(array, size);
-		root = tmp;
-	}
+	int temp = *x;
+	*x = *y;
+	*y = temp;
 }
-
 /**
- * heap_sort - A function that sorts an array using heap algorithm.
- * @array: An array to sort.
- * @size: The size of the array.
- * Return: Nothing.
+ * heapify - heapify operation
+ * @array: the array
+ * @size: size of array
+ * @index: the index
+ * @heap: updated size of array
+ */
+void heapify(int *array, size_t size, size_t  index, size_t heap)
+{
+	size_t largest = index;
+	size_t left = (index * 2) + 1;
+	size_t  right = (index * 2) + 2;
+
+	if (left < heap && array[left] > array[largest])
+		largest = left;
+
+	if (right < heap && array[right] > array[largest])
+		largest = right;
+	if (largest != index)
+	{
+		swap(&array[index], &array[largest]);
+		print_array(array, size);
+		heapify(array, size, largest, heap);
+	}
+
+}
+/**
+ * heap_sort - sort array using heap algorithm
+ * @array: array to be sorted
+ * @size: size of array
  */
 void heap_sort(int *array, size_t size)
 {
-	size_t high = 0, gp = 0;
-	int tmp = 0;
+	int i;
 
-		if (array == NULL || size < 2)
-			return;
+	if (array == NULL || size < 2)
+		return;
 
-		for (gp = (size - 2) / 2; 1; gp--)
-		{
-			swap_root(array, gp, size - 1, size);
-			if (gp == 0)
-				break;
-		}
-
-		high = size - 1;
-		while (high > 0)
+	for (i = (size / 2) - 1 ; i >= 0; i--)
 	{
-		tmp = array[high];
-		array[high] = array[0];
-		array[0] = tmp;
+		heapify(array, size, i, size);
+	}
+
+	for (i = size - 1; i > 0; i--)
+	{
+		swap(&array[0], &array[i]);
 		print_array(array, size);
-		high--;
-		swap_root(array, 0, high, size);
+		heapify(array, size, 0, i);
+
 	}
 }
