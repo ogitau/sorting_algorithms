@@ -1,88 +1,84 @@
 #include "sort.h"
-#include <stdlib.h>
-#include <stdio.h>
-
 /**
- * merge_sort - A function that sorts an array using merge algorithm.
- * @array: The array to sort.
- * @size: The size of the array.
- * Return: Nothing.
+ * printsub - function that print a sub array
+ * @array: array to be printed
+ * @start: start
+ * @end: end
  */
-
-void merge_sort(int *array, size_t size)
+void printsub(int *array, size_t start, size_t end)
 {
-	size_t idx = 0;
-	int *base = NULL;
+	size_t i;
 
-	if (array == NULL || size < 2)
-		return;
-	base = malloc(sizeof(int) * size);
-	if (base == NULL)
-		return;
-	for (; idx < size; idx++)
-		base[idx] = array[idx];
-	merge_partition(0, size, array, base);
-	free(base);
-}
-
-/**
- * merge - A function that sorts the subarrays.
- * @low: Lower index.
- * @midd: Middle index.
- * @high: Higher index.
- * @dest: Destination for data.
- * @src: source of data
- * Return: Nothing
- */
-void merge(size_t low, size_t midd, size_t high, int *dest, int *src)
-{
-	size_t a = 0, b = 0, c = 0;
-
-	printf("Merging....\n");
-	printf("[left]: ");
-	print_array(src + low, midd - low);
-	printf("[right]: ");
-	print_array(src + midd, high - midd);
-	a = low;
-	b = midd;
-	c = low;
-
-	for (; c < high; c++)
+	for (i = start; i < end; i++)
 	{
-		if (a < midd && (b >= high || src[a] <= src[b]))
+		if (i != (end - 1))
+			printf("%d, ", array[i]);
+		else
+			printf("%d\n", array[i]);
+	}
+
+}
+/**
+ * TDmerge - Turn down algo
+ * @array: array
+ * @sorted: sorted sub array
+ * @l: start
+ * @r: end
+ */
+void TDmerge(int *array, int *sorted, size_t l, size_t r)
+{
+	size_t i, j, k;
+	size_t m = (r + l) / 2;
+
+	if (r - l <= 1)
+		return;
+
+	TDmerge(array, sorted, l, m);
+	TDmerge(array, sorted, m, r);
+	printf("Merging...\n");
+	printf("[left]: ");
+	printsub(array, l, m);
+	printf("[right]: ");
+	printsub(array, m, r);
+
+	i = l;
+	j = m;
+	for (k = l; k < r; k++)
+	{
+		if ((i < m) && (j == r || array[i] < array[j]))
 		{
-			dest[c] = src[a];
-			a++;
+			sorted[k] = array[i];
+			i++;
 		}
 		else
 		{
-			dest[c] = src[b];
-			b++;
+			sorted[k] = array[j];
+			j++;
 		}
 	}
 	printf("[Done]: ");
-	print_array(dest + low, high - low);
+	printsub(sorted, l, r);
+
+	for (i = l; i < r; i++)
+		array[i] = sorted[i];
 }
-
 /**
- * merge_partition - A funtion that splits the array recursively.
- * @low: Lower index.
- * @high: Higher index.
- * @array: The array to sort.
- * @base: The copy of the array.
- * Return: Nothing.
+ * merge_sort - merge sort algo
+ * @array: array to be sorted
+ * @size: size of array
  */
-
-void merge_partition(size_t low, size_t high, int *array, int *base)
+void merge_sort(int *array, size_t size)
 {
-	size_t midd = 0;
+	int *sorted;
 
-	if (high - low < 2)
+	if (array == NULL || size < 2)
 		return;
-	midd = (low + high) / 2;
-	merge_partition(low, midd, array, base);
-	merge_partition(midd, high, array, base);
-	merge(low, midd, high, array, base);
-	for (midd = low; midd < high; midd++)
-		base[midd] = array[midd];
+
+	sorted = malloc(sizeof(int) * size);
+
+	if (sorted == NULL)
+		return;
+
+	TDmerge(array, sorted, 0, size);
+	free(sorted);
 }
