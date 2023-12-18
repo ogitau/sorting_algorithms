@@ -35,4 +35,9 @@ void merge_sort(int *array, size_t size);
 void heap_sort(int *array, size_t size);
 void swap_root(int *array, size_t root, size_t high, size_t size);
 void radix_sort(int *array, size_t size);
+void bitonic_sort(int *array, size_t size);
+void bitonic_sort_r(int *x, size_t size, size_t orig_size);
+void bitonic_merge(int *x, size_t size, size_t orig_size);
+void bitonic_compare_descending(int *x, size_t size);
+void bitonic_compare_ascending(int *x, size_t size);
 #endif
