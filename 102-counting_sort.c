@@ -10,59 +10,54 @@
  */
 void counting_sort(int *array, size_t size)
 {
-    int *count, *output;
-    int max_value = 0, i;
+    int max_value = 0;
+    int index_looper = 1;
+    int *array_counter = NULL;
+    int *array_store = NULL;
 
-    if (array == NULL || size < 2)
+    if (!array || size < 2)
         return;
 
-    /* Find the maximum value in the array */
-    for (i = 0; i < (int)size; i++)
+    max_value = array[0];
+    while (index_looper < (int)size)
     {
-        if (array[i] > max_value)
-            max_value = array[i];
+        if (array[index_looper] > max_value)
+            max_value = array[index_looper];
+        index_looper++;
     }
 
-    count = malloc((max_value + 1) * sizeof(int));
-    if (count == NULL)
+   
+    array_store = malloc(sizeof(int) * size);
+    if (!array_store)
         return;
-
-    output = malloc(size * sizeof(int));
-    if (output == NULL)
+    array_counter = malloc(sizeof(int) * (max_value + 1));
+    if (!array_counter)
     {
-        free(count);
+        free(array_store);
         return;
     }
+    for (index_looper = 0; index_looper <= max_value; ++index_looper)
+        array_counter[index_looper] = 0;
 
-    /* Initialize count array with zeros */
-    for (i = 0; i <= max_value; i++)
-        count[i] = 0;
+    for (index_looper = 0; index_looper < (int)size; ++index_looper)
+        array_counter[array[index_looper]]++;
 
-    /* Count the frequency of each element in the array */
-    for (i = 0; i < (int)size; i++)
-        count[array[i]]++;
+    for (index_looper = 1; index_looper <= max_value; ++index_looper)
+        array_counter[index_looper] = array_counter[index_looper - 1] + array_counter[index_looper];
 
-    /* Compute the prefix sum of the count array */
-    for (i = 1; i <= max_value; i++)
-        count[i] += count[i - 1];
+    print_array(array_counter, max_value + 1);
 
-    /* Build the output array */
-    for (i = (int)size - 1; i >= 0; i--)
+    for (index_looper = 0; index_looper < (int)size; ++index_looper)
     {
-        output[count[array[i]] - 1] = array[i];
-        count[array[i]]--;
+        array_store[array_counter[array[index_looper]] - 1] = array[index_looper];
+        array_counter[array[index_looper]]--;
     }
 
-    /* Copy the sorted elements back to the original array */
-    for (i = 0; i < (int)size; i++)
-        array[i] = output[i];
+    for (index_looper = 0; index_looper < (int)size; ++index_looper)
+        array[index_looper] = array_store[index_looper];
 
-    /* Print the count array */
-    printf("%d", count[0]);
-    for (i = 1; i <= max_value; i++)
-        printf(", %d", count[i]);
-    printf("\n");
-
-    free(count);
-    free(output);
-}
+    free(array_counter);
+    free(array_store);
+    array_counter = array_store = NULL;
+}  
+  
