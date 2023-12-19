@@ -8,23 +8,33 @@
  */
 void selection_sort(int *array, size_t size)
 {
-	size_t i, j, smallest_value;
+	size_t m = 0;
+	size_t n = 1;
+	size_t swapper = 0;
+	size_t smallest_value = 0;
+	size_t length = size - 1;
 
-	if (array == NULL || size < 2)
+	if (size < 2)
 		return;
-	for (i = 0; i < size - 1; i++)
+	while (m < length)
 	{
-		smallest_value = i;
-		for (j = i + 1; j < size; j++)
+		if (n == size)
 		{
-			if (array[j] < array[smallest_value])
-				smallest_value = j;
+			if (m != smallest_value)
+			{
+				swapper = array[m];
+				array[m] = array[smallest_value];
+				array[smallest_value] = swapper;
+				print_array(array, size);
+			}
+			++m;
+			smallest_value = m;
+			n = m + 1;
+			continue;
 		}
-		if (smallest_value != i)
-		{
-			swap(&array[i], &array[smallest_value]);
-			print_array(array, size);
-		}
+		if (array[smallest_value] > array[n])
+			smallest_value = n;
+		++n;
 	}
 }
 
