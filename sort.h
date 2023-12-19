@@ -40,4 +40,5 @@ void bitonic_sort_r(int *x, size_t size, size_t orig_size);
 void bitonic_merge(int *x, size_t size, size_t orig_size);
 void bitonic_compare_descending(int *x, size_t size);
 void bitonic_compare_ascending(int *x, size_t size);
+void quick_sort_hoare(int *array, size_t size);
 #endif
