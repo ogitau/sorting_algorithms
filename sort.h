@@ -24,7 +24,6 @@ void swap(int *first, int *second);
 void selection_sort(int *array, size_t size);
 void quick_sort(int *array, size_t size);
 void recursive_quick_sort(int *array, int low, int high);
-int lomuto_partition(int *array, int low, int high);
 void shell_sort(int *array, size_t size);
 void cocktail_sort_list(listint_t **list);
 void swap_nodes(listint_t **list, listint_t *node1, listint_t *node2);
@@ -41,4 +40,8 @@ void bitonic_merge(int *x, size_t size, size_t orig_size);
 void bitonic_compare_descending(int *x, size_t size);
 void bitonic_compare_ascending(int *x, size_t size);
 void quick_sort_hoare(int *array, size_t size);
+void quick_sort(int *array, size_t size);
+void quick_sort_rec(int *array, int lower, int higher, size_t size);
+int lomuto_partition(int *array, int lower, int higher, size_t size);
+
 #endif
