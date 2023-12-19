@@ -12,7 +12,7 @@ void shell_sort(int *array, size_t size)
 	int outer_loop = 0;
 	int gap = 1;
 	int swapper = 0;
-	
+
 	if (!array || size < 2)
 		return;
 	while (gap < (int)size / 3)
